@@ -22,14 +22,36 @@ enum Status {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  ThemeData get getThemeDataBasedOnPlatform {
+    late MaterialColor mainColor;
+    if (kIsWeb) {
+      mainColor = Colors.purple;
+    } else if (Platform.isAndroid) {
+      mainColor = Colors.teal;
+    } else if (Platform.isIOS) {
+      mainColor = Colors.lightGreen;
+    } else if (Platform.isMacOS) {
+      mainColor = Colors.amber;
+    } else if (Platform.isWindows) {
+      mainColor = Colors.blueGrey;
+    } else {
+      mainColor = Colors.blue;
+    }
+    return ThemeData(primarySwatch: mainColor);
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'GTA Ghaziabad Demo',
-      theme: ThemeData(
-        primarySwatch: Platform.isIOS ? Colors.green : Colors.blue,
+      theme:
+
+          /// Changes color based on platform
+          // getThemeDataBasedOnPlatform
+          ThemeData(
+        primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'GTA Ghaziabad'),
     );
@@ -77,52 +99,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return LayoutBuilder(
       builder: (context, constraints) => Scaffold(
-        appBar: constraints.maxWidth < 600
-            ? AppBar(
-                elevation: 0.0,
-                title: Text(widget.title),
-              )
-            : null,
-        bottomNavigationBar: constraints.maxWidth < 600
-            ? BottomNavigationBar(items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-                BottomNavigationBarItem(icon: Icon(Icons.more), label: "More"),
-              ])
-            : null,
+        appBar:
+            //  constraints.maxWidth < 600?
+            AppBar(
+          elevation: 0.0,
+          title: Text(widget.title),
+        )
+        // : null
+        ,
+        bottomNavigationBar:
+            // constraints.maxWidth < 600?
+            BottomNavigationBar(items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.more), label: "More"),
+        ])
+        // : null
+        ,
         body: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (constraints.maxWidth > 600) ...[
-              NavigationRail(
-                selectedIndex: selectedIndex,
-                groupAlignment: groupAligment,
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                labelType: labelType,
-                destinations: const <NavigationRailDestination>[
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite_border),
-                    selectedIcon: Icon(Icons.favorite),
-                    label: Text('First'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.bookmark_border),
-                    selectedIcon: Icon(Icons.book),
-                    label: Text('Second'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.star_border),
-                    selectedIcon: Icon(Icons.star),
-                    label: Text('Third'),
-                  ),
-                ],
-              ),
-              const VerticalDivider(thickness: 1, width: 1),
-            ],
+            // if (constraints.maxWidth > 600)
+            // ...[
+            //   NavigationRail(
+            //     selectedIndex: selectedIndex,
+            //     groupAlignment: groupAligment,
+            //     onDestinationSelected: (int index) {
+            //       setState(() {
+            //         selectedIndex = index;
+            //       });
+            //     },
+            //     labelType: labelType,
+            //     destinations: const <NavigationRailDestination>[
+            //       NavigationRailDestination(
+            //         icon: Icon(Icons.favorite_border),
+            //         selectedIcon: Icon(Icons.favorite),
+            //         label: Text('First'),
+            //       ),
+            //       NavigationRailDestination(
+            //         icon: Icon(Icons.bookmark_border),
+            //         selectedIcon: Icon(Icons.book),
+            //         label: Text('Second'),
+            //       ),
+            //       NavigationRailDestination(
+            //         icon: Icon(Icons.star_border),
+            //         selectedIcon: Icon(Icons.star),
+            //         label: Text('Third'),
+            //       ),
+            //     ],
+            //   ),
+            //   const VerticalDivider(thickness: 1, width: 1),
+            // ],
             Expanded(child: getStateBasedUI),
           ],
         ),
