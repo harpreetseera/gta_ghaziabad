@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-FeedData feedDataFromJson(String str) => FeedData.fromJson(json.decode(str));
-
-String feedDataToJson(FeedData data) => json.encode(data.toJson());
-
 class FeedData {
   FeedData({
     required this.feedList,

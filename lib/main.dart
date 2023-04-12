@@ -71,9 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
-    bool showLeading = false;
-    bool showTrailing = false;
+    int selectedIndex = 0;
     double groupAligment = -1.0;
     NavigationRailLabelType labelType = NavigationRailLabelType.all;
 
@@ -81,17 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, constraints) => Scaffold(
         appBar: constraints.maxWidth < 600
             ? AppBar(
-                // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0.0,
                 title: Text(widget.title),
               )
             : null,
         bottomNavigationBar: constraints.maxWidth < 600
-            ? BottomNavigationBar(items: [
-                const BottomNavigationBarItem(
-                    icon: Icon(Icons.home), label: "Home"),
-                const BottomNavigationBarItem(
-                    icon: Icon(Icons.more), label: "More"),
+            ? BottomNavigationBar(items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+                BottomNavigationBarItem(icon: Icon(Icons.more), label: "More"),
               ])
             : null,
         body: Row(
@@ -100,31 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             if (constraints.maxWidth > 600) ...[
               NavigationRail(
-                selectedIndex: _selectedIndex,
+                selectedIndex: selectedIndex,
                 groupAlignment: groupAligment,
                 onDestinationSelected: (int index) {
                   setState(() {
-                    _selectedIndex = index;
+                    selectedIndex = index;
                   });
                 },
                 labelType: labelType,
-                // leading: showLeading
-                //     ? FloatingActionButton(
-                //         elevation: 0,
-                //         onPressed: () {
-                //           // Add your onPressed code here!
-                //         },
-                //         child: const Icon(Icons.add),
-                //       )
-                //     : const SizedBox(),
-                // trailing: showTrailing
-                //     ? IconButton(
-                //         onPressed: () {
-                //           // Add your onPressed code here!
-                //         },
-                //         icon: const Icon(Icons.more_horiz_rounded),
-                //       )
-                // : const SizedBox(),
                 destinations: const <NavigationRailDestination>[
                   NavigationRailDestination(
                     icon: Icon(Icons.favorite_border),

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_feed_app/model/feed_data.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:insta_feed_app/screen/place_description_page.dart';
 
 class FeedWidget extends StatelessWidget {
   final FeedData feedData;
@@ -17,11 +18,16 @@ class FeedWidget extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             itemBuilder: (BuildContext context, int index) {
-              var edgeInsets = const EdgeInsets.all(0);
+              var edgeInsets =
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 0);
               return InkWell(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
                     builder: (context) => PlaceDescriptionPage(
-                        feedItem: feedData.feedList[index]))),
+                      feedItem: feedData.feedList[index],
+                    ),
+                  ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -66,21 +72,6 @@ class FeedWidget extends StatelessWidget {
   }
 }
 
-class PlaceDescriptionPage extends StatelessWidget {
-  const PlaceDescriptionPage({super.key, required this.feedItem});
-  final FeedItem feedItem;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(feedItem.placeName),
-      ),
-      body: Text(feedItem.placeDescription),
-    );
-  }
-}
-
 class ActionsRow extends StatelessWidget {
   const ActionsRow({super.key});
 
@@ -88,21 +79,21 @@ class ActionsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        geticonPadded(Icons.thumb_up_sharp),
-        geticonPadded(Icons.share),
-        geticonPadded(Icons.comment),
+        geticonPadded(Icons.thumb_up_sharp, context),
+        geticonPadded(Icons.share, context),
+        geticonPadded(Icons.comment, context),
         const Spacer(),
-        geticonPadded(Icons.save_sharp),
+        geticonPadded(Icons.arrow_forward, context),
       ],
     );
   }
 
-  Widget geticonPadded(IconData iconName) {
+  Widget geticonPadded(IconData iconName, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Icon(
         iconName,
-        color: Colors.green[300],
+        color: Theme.of(context).primaryColor,
       ),
     );
   }

@@ -8,10 +8,10 @@ class LoaderWidget extends StatelessWidget {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           SizedBox(
             child: CircularProgressIndicator(
-              color: Colors.green,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ],
